@@ -14,6 +14,9 @@ jobs:
     - name: Check Out Repo 
       uses: actions/checkout@v2
 
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
     - name: Extract YC service account keyfile
       run: 'echo "$SERVICE_ACCOUNT_KEY_FILE" | base64 -d >key.json'
       shell: bash
@@ -24,15 +27,9 @@ jobs:
       run: 'echo "$S3_CREDENTIALS" | base64 -d >.credentials'
       shell: bash
       env:
-        SSH_KEY: ${{secrets.S3_CREDENTIALS}}
+        S3_CREDENTIALS: ${{secrets.S3_CREDENTIALS}}
     
-    - name: echo
-      run: 'cat key.json'
-      shell: bash
-    
-    
-    - name: echo2
-      run: 'cat .credentials'
-      shell: bash
-    
-    
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
