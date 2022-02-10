@@ -2,10 +2,6 @@ name: Terraform Destroy
 
 on: workflow_dispatch
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   terraform-destroy:
     runs-on: ubuntu-latest
