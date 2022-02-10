@@ -1,0 +1,27 @@
+name: Terraform Apply
+
+on: workflow_dispatch
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Out Repo 
+      uses: actions/checkout@v2
+
+    - name: Extract YC service account keyfile
+      run: 'echo "$SERVICE_ACCOUNT_KEY_FILE" | base64 -d >key.json'
+      shell: bash
+      env:
+        SSH_KEY: ${{secrets.SERVICE_ACCOUNT_KEY_FILE}}
+    
+    - name: echo
+      run: 'cat key.json'
+      shell: bash
+    
+    
